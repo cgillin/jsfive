@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/usnistgov/jsfive#readme",
   "dependencies": {
+    "@petamoriken/float16": "^2.0.0",
     "pako-es": "^1.0.9"
   },
   "devDependencies": {

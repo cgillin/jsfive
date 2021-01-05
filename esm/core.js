@@ -1,3 +1,5 @@
+import { getFloat16 as dataViewFloat16 } from '@petamoriken/float16';
+
 export function _unpack_struct_from(structure, buf, offset=0) {
   var fmt = '<' + Array.from(structure.values()).join('');
   var values = struct.unpack_from(fmt, buf, offset);
@@ -78,6 +80,7 @@ class Struct {
       "L": "getUint32",
       "q": "getInt64",
       "Q": "getUint64",
+      "p": "getFloat16",
       "f": "getFloat32",
       "d": "getFloat64"
     }
@@ -93,6 +96,7 @@ class Struct {
       "L": 4,
       "q": 8,
       "Q": 8,
+      "p": 2,
       "f": 4,
       "d": 8
     }
@@ -167,6 +171,10 @@ function isBigEndian() {
 var WARN_OVERFLOW = false;
 
 export class DataView64 extends DataView {
+  getFloat16(byteOffset, littleEndian) {
+    return dataViewFloat16(this, byteOffset, littleEndian);
+  }
+
   getUint64(byteOffset, littleEndian) {
     // split 64-bit number into two 32-bit (4-byte) parts
     const left =  this.getUint32(byteOffset, littleEndian);
